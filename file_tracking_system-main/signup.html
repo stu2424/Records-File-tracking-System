@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Sign Up - Records Management</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+<style>
+  body { background-color: #f8f9fa; }
+</style>
+</head>
+<body>
+<div class="container py-5">
+  <h2 class="text-center mb-4">📝 Sign Up</h2>
+
+  <div class="row justify-content-center">
+    <div class="col-md-4">
+      <div class="card p-4">
+        <form id="signupForm">
+          <input type="text" id="newUsername" class="form-control mb-2" placeholder="Username" required>
+          <input type="password" id="newPassword" class="form-control mb-3" placeholder="Password" required>
+          <button type="submit" class="btn btn-success w-100 mb-2">Sign Up</button>
+        </form>
+        <a href="login.html" class="d-block text-center">Back to Login</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.getElementById('signupForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const username = document.getElementById('newUsername').value.trim();
+  const password = document.getElementById('newPassword').value.trim();
+  if(!username || !password) return alert('Fill all fields');
+
+  let hrUsers = JSON.parse(localStorage.getItem('hrUsers') || '[]');
+  if(hrUsers.find(u => u.username.toLowerCase() === username.toLowerCase())){
+    return alert('Username already exists');
+  }
+
+  hrUsers.push({ username, password });
+  localStorage.setItem('hrUsers', JSON.stringify(hrUsers));
+  alert('User created! Redirecting to login.');
+  window.location.href = 'login.html';
+});
+</script>
+</body>
+</html>
